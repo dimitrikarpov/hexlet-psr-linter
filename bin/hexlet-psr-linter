@@ -4,9 +4,18 @@
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
-echo 'what is your name?: ';
-$name = trim(fgets(STDIN));
+$path = $argv[1] ?? null;
+$msg = "Usage: hexlet-pst-linter filename\n";
 
-$user = new HexletPsrLinter\User($name);
+if (!file_exists($path)) {
+    exit($msg);
+}
 
-var_dump($user);
+$pathinfo = pathinfo($path);
+if (!$pathinfo['extension'] == strtolower('php')) {
+    exit($msg);
+}
+
+$var = new \HexletPsrLinter\Linter(file_get_contents($path));
+
+echo $var->lint();
