@@ -13,14 +13,19 @@ class Linter
 {
     private $stmts;
     private $traverser;
+    private $logger;
 
     public function __construct($code)
     {
+        $this->logger = Logger::getInstance();
+
         $parser = (new ParserFactory)->create(ParserFactory::PREFER_PHP7);
         $this->stmts = $parser->parse($code);
 
         $this->traverser = new \PhpParser\NodeTraverser;
-        $this->traverser->addVisitor(new NodeVisitor);
+        $this->traverser->addVisitor(new NodeVisitor($this->logger));
+
+        return $this->validate();
     }
 
     public function validate()
@@ -31,6 +36,6 @@ class Linter
             // TODO throw own exception
         }
 
-        Reporter::stdout(Logger::getInstance());
+        return $this->logger;
     }
 }

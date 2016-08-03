@@ -8,11 +8,11 @@ use PsrLinter\Checker;
 
 class NodeVisitor extends NodeVisitorAbstract
 {
-    private $log;
+    private $logger;
 
-    public function __construct()
+    public function __construct(Logger $logger)
     {
-        $this->log = Logger::getInstance();
+        $this->logger = $logger;
     }
 
     public function leaveNode(Node $node)
@@ -22,7 +22,7 @@ class NodeVisitor extends NodeVisitorAbstract
             $result = Checker::functionsNaming($node->name);
             if (is_array($result)) {
                 $line = $node->getAttribute('startLine');
-                $this->log->addError($line, $result['reason'], $result['type']);
+                $this->logger->addError($line, $result['reason'], $result['type']);
             }
         }
 
