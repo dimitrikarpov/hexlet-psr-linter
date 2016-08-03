@@ -30,20 +30,7 @@ class Linter
         } catch (\PhpParser\Error $e) {
             // TODO throw own exception
         }
-        //return $this->assembleLog();
-        //$log = Logger::getInstance();
+
         Reporter::stdout(Logger::getInstance());
     }
-
-/*    private function assembleLog()
-    {
-        $log = Logger::getInstance();
-        $found = $log->getLog();
-
-        if (empty($found)) {
-            return '';
-        } else {
-            return 'not valid'; // и тут вызвать что-то для показа предупреждений
-        }
-    }*/
 }
