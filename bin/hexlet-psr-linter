@@ -16,6 +16,5 @@ if (!$pathinfo['extension'] == strtolower('php')) {
     exit($msg);
 }
 
-$var = new \HexletPsrLinter\Linter(file_get_contents($path));
-
-echo $var->lint();
+$linter = new \HexletPsrLinter\Linter(file_get_contents($path));
+$linter->validate();

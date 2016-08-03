@@ -4,69 +4,46 @@ namespace HexletPsrLinter;
 
 use \PhpParser\ParserFactory;
 use \PhpParser\Error;
+use \PhpParser\NodeTraverser;
+use HexletPsrLinter\LinterNodeVisitor;
+use HexletPsrLinter\LinterLog;
+use HexletPsrLinter\Reporter;
 
-/**
- * Linter class
- *
- * Class Linter
- *
- * @package HexletPsrLinter
- */
 class Linter
 {
-    /**
-     * Source code to lint
-     *
-     * @var string
-     */
-    private $code;
-
-    /**
-     * Is valid flag
-     *
-     * @var bool
-     */
-    private $isValid = false;
-
     private $stmts;
+    private $traverser;
 
-    /**
-     * Constructor
-     *
-     * @param string $code code to validate
-     */
     public function __construct($code)
     {
-        $this->code = $code;
         $parser = (new ParserFactory)->create(ParserFactory::PREFER_PHP7);
+        $this->stmts = $parser->parse($code);
 
+        $this->traverser = new \PhpParser\NodeTraverser;
+        $this->traverser->addVisitor(new LinterNodeVisitor);
+    }
+
+    public function validate()
+    {
         try {
-            $this->stmts = $parser->parse($this->code);
+            $this->traverser->traverse($this->stmts);
         } catch (\PhpParser\Error $e) {
-            // 'Parse Error: ' . $e->getMessage();
+            // TODO throw own exception
         }
+        //return $this->assembleLog();
+        //$log = LinterLog::getInstance();
+        Reporter::stdout(LinterLog::getInstance());
     }
 
-    public function lint()
+/*    private function assembleLog()
     {
-        return $this->validate($this->stmts);
-    }
+        $log = LinterLog::getInstance();
+        $found = $log->getLog();
 
-    /**
-     * Validate statement nodes
-     *
-     * @param array $stmts array of statement nodes
-     *
-     * @return string message
-     */
-    private function validate(array $stmts)
-    {
-        $this->isValid = true;
-
-        if ($this->isValid) {
+        if (empty($found)) {
             return '';
         } else {
-            return 'not valid';
+            return 'not valid'; // и тут вызвать что-то для показа предупреждений
         }
-    }
+    }*/
 }

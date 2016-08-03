@@ -1,13 +1,13 @@
 <?php
 
-namespace App;
-
-/**
- * Test function
- *
- * @return null nothing
- */
 function test()
 {
-    return null;
+}
+
+function Le_test()
+{
+}
+
+function _theTest()
+{
 }
