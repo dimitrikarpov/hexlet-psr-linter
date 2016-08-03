@@ -1,6 +1,6 @@
 {
   "name": "deeem/hexlet-psr-linter",
-  "bin": ["bin/hexlet-psr-linter"],
+  "bin": ["bin/psr-linter"],
   "type": "library",
   "require": {
     "nikic/php-parser": "*"
@@ -12,7 +12,7 @@
   },
   "autoload": {
     "psr-4": {
-      "HexletPsrLinter\\": "src/"
+      "PsrLinter\\": "src/"
     }
   }
 }

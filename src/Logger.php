@@ -1,8 +1,8 @@
 <?php
 
-namespace HexletPsrLinter;
+namespace PsrLinter;
 
-class LinterLog
+class Logger
 {
     protected static $instance;
     private $log = [];
@@ -32,7 +32,7 @@ class LinterLog
      * Add report
      *
      * @param int $line
-     * @param stirng $reason
+     * @param string $reason
      * @param string $type
      */
     public function addError($line, $reason, $type = 'error')

@@ -1,13 +1,13 @@
 <?php
 
-namespace HexletPsrLinter;
+namespace PsrLinter;
 
 use \PhpParser\ParserFactory;
 use \PhpParser\Error;
 use \PhpParser\NodeTraverser;
-use HexletPsrLinter\LinterNodeVisitor;
-use HexletPsrLinter\LinterLog;
-use HexletPsrLinter\Reporter;
+use PsrLinter\NodeVisitor;
+use PsrLinter\Logger;
+use PsrLinter\Reporter;
 
 class Linter
 {
@@ -20,7 +20,7 @@ class Linter
         $this->stmts = $parser->parse($code);
 
         $this->traverser = new \PhpParser\NodeTraverser;
-        $this->traverser->addVisitor(new LinterNodeVisitor);
+        $this->traverser->addVisitor(new NodeVisitor);
     }
 
     public function validate()
@@ -31,13 +31,13 @@ class Linter
             // TODO throw own exception
         }
         //return $this->assembleLog();
-        //$log = LinterLog::getInstance();
-        Reporter::stdout(LinterLog::getInstance());
+        //$log = Logger::getInstance();
+        Reporter::stdout(Logger::getInstance());
     }
 
 /*    private function assembleLog()
     {
-        $log = LinterLog::getInstance();
+        $log = Logger::getInstance();
         $found = $log->getLog();
 
         if (empty($found)) {

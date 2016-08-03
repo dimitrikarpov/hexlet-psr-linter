@@ -1,6 +1,6 @@
 <?php
 
-namespace HexletPsrLinter;
+namespace PsrLinter;
 
 class CliTest extends \PHPUnit\Framework\TestCase
 {

@@ -1,19 +1,19 @@
 <?php
 
-namespace HexletPsrLinter;
+namespace PsrLinter;
 
 use \PhpParser\Node;
 use \PhpParser\NodeVisitorAbstract;
-use HexletPsrLinter\LinterLog;
-use HexletPsrLinter\Checker;
+use PsrLinter\Logger;
+use PsrLinter\Checker;
 
-class LinterNodeVisitor extends NodeVisitorAbstract
+class NodeVisitor extends NodeVisitorAbstract
 {
     private $log;
 
     public function __construct()
     {
-        $this->log = LinterLog::getInstance();
+        $this->log = Logger::getInstance();
     }
 
     public function leaveNode(Node $node)

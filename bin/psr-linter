@@ -5,7 +5,7 @@
 require_once __DIR__ . '/../vendor/autoload.php';
 
 $path = $argv[1] ?? null;
-$msg = "Usage: hexlet-pst-linter filename\n";
+$msg = "Usage: pst-linter filename\n";
 
 if (!file_exists($path)) {
     exit($msg);
@@ -16,5 +16,5 @@ if (!$pathinfo['extension'] == strtolower('php')) {
     exit($msg);
 }
 
-$linter = new \HexletPsrLinter\Linter(file_get_contents($path));
+$linter = new \PsrLinter\Linter(file_get_contents($path));
 $linter->validate();

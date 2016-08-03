@@ -1,12 +1,12 @@
 <?php
 
-namespace HexletPsrLinter;
+namespace PsrLinter;
 
-use HexletPsrLinter\LinterLog;
+use PsrLinter\Logger;
 
 class Reporter
 {
-    public static function stdout(LinterLog $logger)
+    public static function stdout(Logger $logger)
     {
         $log = $logger->getLog();
         print_r($log);
