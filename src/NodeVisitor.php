@@ -4,7 +4,6 @@ namespace PsrLinter;
 
 use \PhpParser\Node;
 use \PhpParser\NodeVisitorAbstract;
-use PsrLinter\Logger;
 use PsrLinter\Checker;
 
 class NodeVisitor extends NodeVisitorAbstract
