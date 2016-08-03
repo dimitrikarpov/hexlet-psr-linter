@@ -5,7 +5,7 @@
 require_once __DIR__ . '/../vendor/autoload.php';
 
 $path = $argv[1] ?? null;
-$msg = "Usage: pst-linter filename\n";
+$msg = "Usage: psr-linter filename\n";
 
 if (!file_exists($path)) {
     exit($msg);
