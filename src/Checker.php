@@ -14,10 +14,9 @@ class Checker
      */
     public static function functionsNaming($name)
     {
-        $result = preg_match("/[a-z]+(_)[a-z0-9]+/i", $name);
         $reason = 'Method names MUST be declared in camelCase.';
 
-        if ($result == 1) {
+        if (!\PHP_CodeSniffer::isCamelCaps($name)) {
             return ['type' => 'error', 'reason' => "{$name}: {$reason}"];
         }
 
