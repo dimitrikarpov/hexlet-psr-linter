@@ -18,4 +18,9 @@ if (!$pathinfo['extension'] == strtolower('php')) {
 
 $linter = new \PsrLinter\Linter(file_get_contents($path));
 $errors = $linter->validate();
-echo \PsrLinter\Reporter::stdout($errors);
+
+if (empty($errors)) {
+    exit;
+}
+
+file_put_contents('php://stderr', \PsrLinter\Reporter::stdout($errors));
