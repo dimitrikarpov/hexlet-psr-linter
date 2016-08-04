@@ -7,7 +7,7 @@ class Logger
     protected static $instance;
     private $log = [];
 
-    public function getInstance()
+    public static function getInstance()
     {
         if (null === static::$instance) {
             static::$instance = new static();
