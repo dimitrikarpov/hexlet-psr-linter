@@ -9,6 +9,12 @@ class Reporter
     public static function stdout(Logger $logger)
     {
         $log = $logger->getLog();
-        print_r($log);
+        $output = '';
+
+        foreach ($log as $item) {
+            $output .= $item['line'] . '    ' . $item['type']. '     ' . $item['reason'] . "\n";
+        }
+
+        return $output;
     }
 }

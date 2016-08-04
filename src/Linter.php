@@ -24,8 +24,6 @@ class Linter
 
         $this->traverser = new \PhpParser\NodeTraverser;
         $this->traverser->addVisitor(new NodeVisitor($this->logger));
-
-        return $this->validate();
     }
 
     public function validate()
