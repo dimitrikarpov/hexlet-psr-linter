@@ -15,9 +15,9 @@ $pathinfo = pathinfo($path);
 if (!$pathinfo['extension'] == strtolower('php')) {
     exit($msg);
 }
-
-$linter = new \PsrLinter\Linter(file_get_contents($path));
-$errors = $linter->validate();
+$code = file_get_contents($path);
+$linter = new \PsrLinter\Linter();
+$errors = $linter->validate($code);
 
 if (empty($errors)) {
     exit(0);

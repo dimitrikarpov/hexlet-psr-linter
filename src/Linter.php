@@ -15,19 +15,19 @@ class Linter
     private $traverser;
     private $logger;
 
-    public function __construct($code)
+    public function __construct()
     {
         $this->logger = Logger::getInstance();
+    }
 
+    public function validate($code)
+    {
         $parser = (new ParserFactory)->create(ParserFactory::PREFER_PHP7);
         $this->stmts = $parser->parse($code);
 
         $this->traverser = new \PhpParser\NodeTraverser;
         $this->traverser->addVisitor(new NodeVisitor($this->logger));
-    }
 
-    public function validate()
-    {
         try {
             $this->traverser->traverse($this->stmts);
         } catch (\PhpParser\Error $e) {

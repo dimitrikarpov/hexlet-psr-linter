@@ -12,10 +12,8 @@ class FunctionsNamingTest extends \PHPUnit\Framework\TestCase
     public function testWrong1()
     {
         $code = file_get_contents('tests/snippets/functionsNaming.wrong.1.php');
-        $linter = new Linter($code);
-        $errors = $linter->validate();
-//        var_dump($errors);
-//        exit;
+        $linter = new Linter();
+        $errors = $linter->validate($code);
 
         $this->assertFalse(empty($errors));
     }
