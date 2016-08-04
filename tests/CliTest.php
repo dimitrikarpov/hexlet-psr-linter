@@ -30,7 +30,7 @@ class CliTest extends \PHPUnit\Framework\TestCase
             2 => array("pipe", "w")
         );
 
-        $cmd = './bin/psr-linter tests/snippets/functionsNaming.php';
+        $cmd = './bin/psr-linter tests/snippets/functionsNaming.wrong.1.php';
         $process = proc_open($cmd, $descriptorspec, $pipes, null, null);
         $stderr = stream_get_contents($pipes[2]);
         fclose($pipes[2]);
