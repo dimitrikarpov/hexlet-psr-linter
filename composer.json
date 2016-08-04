@@ -1,7 +1,7 @@
 {
   "name": "deeem/hexlet-psr-linter",
-  "bin": ["bin/psr-linter"],
   "type": "library",
+  "bin": ["bin/psr-linter"],
   "require": {
     "nikic/php-parser": "*"
   },
