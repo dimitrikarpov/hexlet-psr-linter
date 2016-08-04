@@ -5,7 +5,7 @@
 require_once __DIR__ . '/../vendor/autoload.php';
 
 $path = $argv[1] ?? null;
-$msg = "Usage: psr-linter filename\n";
+$msg = "Usage: psr-linter filename" . "\n";
 
 if (!file_exists($path)) {
     exit($msg);
@@ -20,7 +20,7 @@ $linter = new \PsrLinter\Linter(file_get_contents($path));
 $errors = $linter->validate();
 
 if (empty($errors)) {
-    exit;
+    exit(0);
 }
 
 file_put_contents('php://stderr', \PsrLinter\Reporter::stdout($errors));
