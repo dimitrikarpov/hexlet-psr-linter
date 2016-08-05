@@ -4,20 +4,19 @@
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
-$path = $argv[1] ?? null;
-$msg = "Usage: psr-linter filename" . "\n";
+use \Commando\Command;
 
-if (!file_exists($path)) {
-    exit($msg);
-}
+$cmd = new Commando\Command();
 
-$pathinfo = pathinfo($path);
-if (!$pathinfo['extension'] == strtolower('php')) {
-    exit($msg);
-}
-$code = file_get_contents($path);
+$cmd->option()
+    ->require(true)
+    ->describedAs('One or more files and/or directories to check')
+    ->expectsFile();
+$cmd
+    ->setHelp('Validate php files according PSR2 standards' . PHP_EOL . PHP_EOL. 'Usage: psr-linter <file>');
+
 $linter = new \PsrLinter\Linter();
-$errors = $linter->validate($code);
+$errors = $linter->validate(file_get_contents($cmd[0]));
 
 if (empty($errors)) {
     exit(0);
