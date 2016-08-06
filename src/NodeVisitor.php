@@ -4,7 +4,7 @@ namespace PsrLinter;
 
 use \PhpParser\Node;
 use \PhpParser\NodeVisitorAbstract;
-use PsrLinter\Checker;
+use function PsrLinter\checkFunctionsNaming;
 
 class NodeVisitor extends NodeVisitorAbstract
 {
@@ -14,7 +14,7 @@ class NodeVisitor extends NodeVisitorAbstract
     {
         // Validate functions naming conventions
         if ($node instanceof \PhpParser\Node\Stmt\Function_) {
-            $result = Checker::functionsNaming($node->name);
+            $result = checkFunctionsNaming($node->name);
             if (is_array($result)) {
                 $this->errors[] = [
                     'line'   => $node->getAttribute('startLine'),

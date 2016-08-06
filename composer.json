@@ -16,7 +16,9 @@
       "PsrLinter\\": "src/"
     },
     "files": [
-      "src/Linter.php"
+      "src/linter.php",
+      "src/checker.php",
+      "src/reporter.php"
     ]
   }
 }
