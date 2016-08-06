@@ -10,20 +10,16 @@ use PsrLinter\ExceptionParse;
 
 class Linter
 {
-    private $stmts;
-    private $traverser;
-
     public function validate($code)
     {
         $parser = (new ParserFactory)->create(ParserFactory::PREFER_PHP7);
-
-        $this->traverser = new \PhpParser\NodeTraverser;
         $visitor = new NodeVisitor();
-        $this->traverser->addVisitor($visitor);
+        $traverser = new \PhpParser\NodeTraverser;
+        $traverser->addVisitor($visitor);
 
         try {
-            $this->stmts = $parser->parse($code);
-            $this->traverser->traverse($this->stmts);
+            $stmts = $parser->parse($code);
+            $traverser->traverse($stmts);
         } catch (\PhpParser\Error $e) {
             throw new ExceptionParse();
         }
