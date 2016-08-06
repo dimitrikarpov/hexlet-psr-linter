@@ -2,17 +2,14 @@
 
 namespace PsrLinter;
 
-use PsrLinter\Logger;
-
 class Reporter
 {
-    public static function stdout(Logger $logger)
+    public static function stdout($errors)
     {
-        $log = $logger->getLog();
         $output = '';
 
-        foreach ($log as $item) {
-            $output .= $item['line'] . '    ' . $item['type']. '     ' . $item['reason'] . "\n";
+        foreach ($errors as $item) {
+            $output .= "{$item['line']}\t{$item['type']}\t{$item['where']}\t{$item['reason']}\n";
         }
 
         return $output;

@@ -17,7 +17,7 @@ class Checker
         $reason = 'Method names MUST be declared in camelCase.';
 
         if (!\PHP_CodeSniffer::isCamelCaps($name)) {
-            return ['type' => 'error', 'reason' => "{$name}: {$reason}"];
+            return ['type' => 'error', 'reason' => "{$reason}", "where" => $name];
         }
 
         return true;

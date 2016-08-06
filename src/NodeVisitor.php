@@ -8,12 +8,7 @@ use PsrLinter\Checker;
 
 class NodeVisitor extends NodeVisitorAbstract
 {
-    private $logger;
-
-    public function __construct(Logger $logger)
-    {
-        $this->logger = $logger;
-    }
+    private $errors = [];
 
     public function leaveNode(Node $node)
     {
@@ -21,11 +16,20 @@ class NodeVisitor extends NodeVisitorAbstract
         if ($node instanceof \PhpParser\Node\Stmt\Function_) {
             $result = Checker::functionsNaming($node->name);
             if (is_array($result)) {
-                $line = $node->getAttribute('startLine');
-                $this->logger->addError($line, $result['reason'], $result['type']);
+                $this->errors[] = [
+                    'line'   => $node->getAttribute('startLine'),
+                    'reason' => $result['reason'],
+                    'type'   => $result['type'],
+                    'where'  => $result['where']
+                ];
             }
         }
 
         // Validate ... Another checker
+    }
+
+    public function getErrors()
+    {
+        return $this->errors;
     }
 }

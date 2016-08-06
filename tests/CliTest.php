@@ -11,7 +11,7 @@ class CliTest extends \PHPUnit\Framework\TestCase
 
     public function testCheckValidFile()
     {
-        exec('./bin/psr-linter tests/snippets/valid.php', $output, $return_var);
+        exec('./bin/psr-linter tests/fixtures/valid.php', $output, $return_var);
         $this->assertEquals(0, $return_var);
     }
 }
