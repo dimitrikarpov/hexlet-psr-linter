@@ -8,7 +8,7 @@ use \PhpParser\NodeTraverser;
 use PsrLinter\NodeVisitor;
 use PsrLinter\ExceptionParse;
 
-function linter($code)
+function lint($code)
 {
     $parser = (new ParserFactory)->create(ParserFactory::PREFER_PHP7);
     $visitor = new NodeVisitor();

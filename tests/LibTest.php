@@ -2,7 +2,7 @@
 
 namespace PsrLinter;
 
-use PsrLinter\linter;
+use PsrLinter\lint;
 use PsrLinter\ExceptionParse;
 
 class FunctionsNamingTest extends \PHPUnit\Framework\TestCase
@@ -13,7 +13,7 @@ class FunctionsNamingTest extends \PHPUnit\Framework\TestCase
     public function testParseException()
     {
         $this->expectException(ExceptionParse::class);
-        linter('<?php fun}[f');
+        lint('<?php fun}[f');
     }
 
     /**
@@ -22,7 +22,7 @@ class FunctionsNamingTest extends \PHPUnit\Framework\TestCase
     public function testWrong1()
     {
         $code = file_get_contents('tests/fixtures/functionsNaming.wrong.1.php');
-        $errors = linter($code);
+        $errors = lint($code);
         $this->assertFalse(empty($errors));
     }
 }
