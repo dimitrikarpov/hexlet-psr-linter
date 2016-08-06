@@ -4,8 +4,7 @@ namespace PsrLinter;
 
 function report($errors)
 {
-    return array_reduce($errors, function ($carry, $item) {
-        $carry .= implode("\t", $item) . "\n";
-        return $carry;
-    }, '');
+    return implode("\n", array_map(function ($item) {
+        return implode("\t", $item);
+    }, $errors));
 }
