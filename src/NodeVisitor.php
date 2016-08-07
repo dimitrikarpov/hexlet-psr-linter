@@ -18,9 +18,9 @@ class NodeVisitor extends NodeVisitorAbstract
             if (is_array($result)) {
                 $this->errors[] = [
                     'line'   => $node->getAttribute('startLine'),
-                    'reason' => $result['reason'],
                     'type'   => $result['type'],
-                    'where'  => $result['where']
+                    'where'  => $result['where'],
+                    'reason' => $result['reason']
                 ];
             }
         }
@@ -28,8 +28,11 @@ class NodeVisitor extends NodeVisitorAbstract
         // Validate ... Another checker
     }
 
+    /**
+     * @return array|bool errors or false
+     */
     public function getErrors()
     {
-        return $this->errors;
+        return empty($this->errors) ? false : $this->errors;
     }
 }

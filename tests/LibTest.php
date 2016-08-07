@@ -13,7 +13,7 @@ class FunctionsNamingTest extends \PHPUnit\Framework\TestCase
     public function testParseException()
     {
         $this->expectException(ExceptionParse::class);
-        lint('<?php fun}[f');
+        lint('<?php fun(t!0n');
     }
 
     /**
