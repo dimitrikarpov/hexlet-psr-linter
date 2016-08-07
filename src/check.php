@@ -19,3 +19,23 @@ function checkFunctionsNaming($name)
 
     return true;
 }
+
+/**
+ * Check variable name, according to these rules:
+ * * Property names SHOULD NOT be prefixed with a single underscore to indicate protected or private visibility.
+ * @param $name variable name
+ *
+ * @return array|bool true or error description
+ */
+
+function checkVariableNaming($name)
+{
+    $reason = "Property names SHOULD NOT be prefixed with a single" .
+              " underscore to indicate protected or private visibility.";
+
+    if (preg_match('/^_.+/', $name)) {
+        return ['type' => 'error', 'reason' => "{$reason}", "where" => $name];
+    }
+
+    return true;
+}

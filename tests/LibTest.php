@@ -35,4 +35,24 @@ class FunctionsNamingTest extends \PHPUnit\Framework\TestCase
         $errors = lint($code);
         $this->assertFalse($errors);
     }
+
+    /**
+     * Validate content of file variablesNaming.right.php according to first underscore rule
+     */
+    public function testVariablesNamesRight()
+    {
+        $code = file_get_contents('tests/fixtures/variablesNaming.right.php');
+        $errors = lint($code);
+        $this->assertFalse($errors);
+    }
+
+    /**
+     * Validate content of file functionsNaming.wrong.php according to first underscore rule
+     */
+    public function testVariablesNamingWrong()
+    {
+        $code = file_get_contents('tests/fixtures/functionsNaming.wrong.php');
+        $errors = lint($code);
+        $this->assertFalse(empty($errors));
+    }
 }
