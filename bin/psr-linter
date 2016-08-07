@@ -5,9 +5,8 @@
 require_once __DIR__ . '/../vendor/autoload.php';
 
 use \Commando\Command;
-use function \PsrLinter\lint;
+use function \PsrLinter\lintDirectory;
 use function \PsrLinter\report;
-use function \PsrLinter\app;
 
 $cmd = new Commando\Command();
 
@@ -18,7 +17,7 @@ $cmd->option()
 $cmd
     ->setHelp('Validate php files according PSR2 standards' . PHP_EOL . PHP_EOL. 'Usage: psr-linter <file>');
 
-$errors = app($cmd[0]);
+$errors = lintDirectory($cmd[0]);
 
 if ($errors) {
     file_put_contents('php://stderr', report($errors));

@@ -4,7 +4,7 @@ namespace PsrLinter;
 
 use PsrLinter\lint;
 
-function app($path)
+function lintDirectory($path)
 {
     /**
      * @param string $path filename or directory

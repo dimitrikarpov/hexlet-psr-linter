@@ -19,7 +19,7 @@
       "src/lint.php",
       "src/check.php",
       "src/report.php",
-      "src/app.php"
+      "src/lintDirectory.php"
     ]
   }
 }
