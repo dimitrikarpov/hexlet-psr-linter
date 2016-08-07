@@ -1,18 +1,25 @@
 {
   "name": "deeem/hexlet-psr-linter",
-  "bin": ["bin/hexlet-psr-linter"],
   "type": "library",
+  "bin": ["bin/psr-linter"],
   "require": {
-    "nikic/php-parser": "*"
+    "nikic/php-parser": "*",
+    "nategood/commando": "*",
+    "squizlabs/php_codesniffer": "2.*"
   },
   "require-dev": {
     "phpunit/phpunit": "^5.2",
-    "squizlabs/php_codesniffer": "2.*",
     "codeclimate/php-test-reporter": "dev-master"
   },
   "autoload": {
     "psr-4": {
-      "HexletPsrLinter\\": "src/"
-    }
+      "PsrLinter\\": "src/"
+    },
+    "files": [
+      "src/lint.php",
+      "src/check.php",
+      "src/report.php",
+      "src/lintDirectory.php"
+    ]
   }
 }
