@@ -17,12 +17,22 @@ class FunctionsNamingTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * Validate content of file functionsNaming.wrong.1.php according to camelCase rule
+     * Validate content of file functionsNaming.wrong.php according to camelCase rule
      */
-    public function testWrong1()
+    public function testFunctionsNamingWrong()
     {
-        $code = file_get_contents('tests/fixtures/functionsNaming.wrong.1.php');
+        $code = file_get_contents('tests/fixtures/functionsNaming.wrong.php');
         $errors = lint($code);
         $this->assertFalse(empty($errors));
+    }
+
+    /**
+     * Validate content of file functionsNaming.right.php according to camelCase rule
+     */
+    public function testFunctionsNamingRight()
+    {
+        $code = file_get_contents('tests/fixtures/functionsNaming.right.php');
+        $errors = lint($code);
+        $this->assertFalse($errors);
     }
 }

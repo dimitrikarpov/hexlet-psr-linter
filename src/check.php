@@ -13,7 +13,7 @@ function checkFunctionsNaming($name)
 {
     $reason = 'Method names MUST be declared in camelCase.';
 
-    if (!\PHP_CodeSniffer::isCamelCaps($name)) {
+    if (!preg_match('/^[a-z]+([A-Z]?[a-z]+)+$/', $name)) {
         return ['type' => 'error', 'reason' => "{$reason}", "where" => $name];
     }
 
