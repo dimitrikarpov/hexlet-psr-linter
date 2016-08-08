@@ -27,7 +27,6 @@ function checkFunctionsNaming($name)
  *
  * @return array|bool true or error description
  */
-
 function checkVariableNaming($name)
 {
     $reason = "Property names SHOULD NOT be prefixed with a single" .
