@@ -39,7 +39,7 @@ class FunctionsNamingTest extends \PHPUnit\Framework\TestCase
     /**
      * Validate content of file variablesNaming.right.php according to first underscore rule
      */
-    public function testVariablesNamesRight()
+    public function testVariablesNamingRight()
     {
         $code = file_get_contents('tests/fixtures/variablesNaming.right.php');
         $errors = lint($code);

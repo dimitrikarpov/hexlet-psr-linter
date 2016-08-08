@@ -7,6 +7,7 @@ use \PhpParser\Error;
 use \PhpParser\NodeTraverser;
 use PsrLinter\NodeVisitor;
 use PsrLinter\ExceptionParse;
+use function PsrLinter\makeValidator;
 
 function lint($code)
 {

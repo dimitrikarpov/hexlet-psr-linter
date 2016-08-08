@@ -17,9 +17,10 @@
     },
     "files": [
       "src/lint.php",
-      "src/check.php",
+      "src/makeValidator.php",
       "src/report.php",
-      "src/lintDirectory.php"
+      "src/lintDirectory.php",
+      "src/getCheckers.php"
     ]
   }
 }
