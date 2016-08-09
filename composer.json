@@ -17,8 +17,6 @@
     },
     "files": [
       "src/lint.php",
-      "src/makeValidator.php",
-      "src/getCheckers.php",
       "src/reportText.php",
       "src/lintCli.php"
     ]

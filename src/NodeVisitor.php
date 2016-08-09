@@ -8,26 +8,30 @@ use function PsrLinter\makeValidator;
 
 class NodeVisitor extends NodeVisitorAbstract
 {
-    private $errors = [];
+    private $checkers = [];
+
+    public function __construct($checkers)
+    {
+        $this->checkers = $checkers;
+    }
 
     public function leaveNode(Node $node)
     {
-        $validate = makeValidator();
-        $this->addErrors($validate($node));
-    }
-
-    public function addErrors($errors)
-    {
-        if (!empty($errors)) {
-            $this->errors = array_merge($this->errors, $errors);
+        foreach ($this->checkers as $checker) {
+            $checker->check($node);
         }
     }
 
-    /**
-     * @return array|bool errors or false
-     */
     public function getErrors()
     {
-        return empty($this->errors) ? false : $this->errors;
+        $errors = [];
+        foreach ($this->checkers as $checker) {
+            $checkerErrors = $checker->getErrors();
+            if ($checkerErrors) {
+                $errors = array_merge($errors, $checkerErrors);
+            }
+        }
+
+        return empty($errors) ? false : $errors;
     }
 }
