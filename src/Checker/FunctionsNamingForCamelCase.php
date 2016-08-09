@@ -2,10 +2,8 @@
 
 namespace PsrLinter\Checker;
 
-class FunctionsNamingForCamelCase implements CheckerInterface
+class FunctionsNamingForCamelCase extends CheckerTemplate implements CheckerInterface
 {
-    private $errors = [];
-
     public function check(\PhpParser\Node $node)
     {
         if (($node instanceof \PhpParser\Node\Stmt\Function_) &&
@@ -17,10 +15,5 @@ class FunctionsNamingForCamelCase implements CheckerInterface
                 'reason' => 'Method names MUST be declared in camelCase.'
             ];
         }
-    }
-
-    public function getErrors()
-    {
-        return empty($this->errors) ? false : $this->errors;
     }
 }

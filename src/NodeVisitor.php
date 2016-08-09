@@ -4,7 +4,6 @@ namespace PsrLinter;
 
 use \PhpParser\Node;
 use \PhpParser\NodeVisitorAbstract;
-use function PsrLinter\makeValidator;
 
 class NodeVisitor extends NodeVisitorAbstract
 {
