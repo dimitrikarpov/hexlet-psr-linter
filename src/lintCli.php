@@ -2,9 +2,9 @@
 
 namespace PsrLinter;
 
-use PsrLinter\lint;
+use function PsrLinter\lint;
 
-function lintDirectory($path)
+function lintCli($path)
 {
     /**
      * @param string $path filename or directory

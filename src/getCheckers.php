@@ -2,8 +2,6 @@
 
 namespace PsrLinter;
 
-use function PsrLinter\getCheckers;
-
 function getCheckers()
 {
     $checkFunctionsNamingForCamelCase = function (\PhpParser\Node $node) {

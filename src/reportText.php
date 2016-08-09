@@ -9,7 +9,7 @@ namespace PsrLinter;
  *
  * @return string report
  */
-function report($errors)
+function reportText($errors)
 {
     $glueFileErrors = function ($fileErrors) {
         $strings = array_map(function ($item) {

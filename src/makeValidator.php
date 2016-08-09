@@ -2,6 +2,8 @@
 
 namespace PsrLinter;
 
+use function PsrLinter\getCheckers;
+
 function makeValidator()
 {
     $checkers = getCheckers();
