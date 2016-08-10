@@ -2,10 +2,12 @@
 
 namespace PsrLinter;
 
-use function PsrLinter\lint;
+use function PsrLinter\makeLinter;
 
 function lintCli($path)
 {
+    $lint = makeLinter();
+
     /**
      * @param string $path filename or directory
      *
@@ -42,9 +44,9 @@ function lintCli($path)
      *
      * @return bool|array list of founded errors or false
      */
-    $getErrors = function ($files) {
-        $allErrors = array_reduce($files, function ($carry, $item) {
-            $errors = lint(file_get_contents($item));
+    $getErrors = function ($files) use ($lint) {
+        $allErrors = array_reduce($files, function ($carry, $item) use ($lint) {
+            $errors = $lint(file_get_contents($item));
             if ($errors) {
                 $carry[$item] = $errors;
             }

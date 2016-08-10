@@ -16,7 +16,7 @@
       "PsrLinter\\": "src/"
     },
     "files": [
-      "src/lint.php",
+      "src/makeLinter.php",
       "src/reportText.php",
       "src/lintCli.php"
     ]
