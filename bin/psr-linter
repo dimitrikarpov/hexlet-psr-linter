@@ -21,6 +21,7 @@ $errors = lintCli($cmd[0]);
 
 if ($errors) {
     file_put_contents('php://stderr', reportText($errors));
+    exit(1);
 }
 
 exit(0);
