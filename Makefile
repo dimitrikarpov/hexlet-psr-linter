@@ -9,3 +9,6 @@ lint:
 
 test:
 	composer exec 'phpunit --color tests'
+
+selftest:
+	bin/psr-linter src
