@@ -4,9 +4,9 @@ namespace PsrLinter;
 
 use function PsrLinter\makeLinter;
 
-function lintCli($path)
+function lintCli($path, $fixerEnabled = false)
 {
-    $lint = makeLinter();
+    $lint = makeLinter($fixerEnabled);
 
     /**
      * @param string $path filename or directory
@@ -25,9 +25,6 @@ function lintCli($path)
     };
 
     /**
-     * getErrors
-     *
-     * Lint files and return array of founded errors according to these structure:
      * $errors = [
      * 'file.php' => [
      *          [ 'error', 'line', 'reason' ... ],
@@ -39,22 +36,22 @@ function lintCli($path)
      *  ],
      * .......
      * ];
-     *
-     * @param string $files
-     *
-     * @return bool|array list of founded errors or false
      */
-    $getErrors = function ($files) use ($lint) {
-        $allErrors = array_reduce($files, function ($carry, $item) use ($lint) {
-            $errors = $lint(file_get_contents($item));
-            if ($errors) {
-                $carry[$item] = $errors;
-            }
-            return $carry;
-        }, []);
 
-        return empty($allErrors) ? false : $allErrors;
-    };
+    $files = $getFiles($path);
+    $errors = [];
+    foreach ($files as $file) {
+        $linterReport = $lint(file_get_contents($file));
+        $fileErrors = $linterReport['errors'];
+        if ($fileErrors) {
+            $errors[$file] = $fileErrors;
+        }
 
-    return $getErrors($getFiles($path));
+        if ($fixerEnabled) {
+            $result = file_put_contents($file, $linterReport['fixedCode']);
+            // TODO : write file exception
+        }
+    }
+
+    return empty($errors) ? false : $errors;
 }

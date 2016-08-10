@@ -13,11 +13,15 @@ $cmd = new Commando\Command();
 $cmd->option()
     ->require(true)
     ->describedAs('One or more files and/or directories to check')
-    ->expectsFile();
-$cmd
+    ->expectsFile()
+    ->flag('fix')
+    ->describedAs('fix violations')
+    ->boolean()
     ->setHelp('Validate php files according PSR2 standards' . PHP_EOL . PHP_EOL. 'Usage: psr-linter <file>');
 
-$errors = lintCli($cmd[0]);
+$flags = $cmd->getFlagValues();
+
+$errors = lintCli($cmd[0], $flags['fix']);
 
 if ($errors) {
     file_put_contents('php://stderr', reportText($errors));
