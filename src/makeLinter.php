@@ -32,7 +32,6 @@ function makeLinter($fixerEnabled = false)
                 $prettyPrinter = new PrettyPrinter\Standard;
                 $linterReport['fixedCode'] = $prettyPrinter->prettyPrintFile($stmts);
             }
-
         } catch (\PhpParser\Error $e) {
             throw new ExceptionParse();
         }
