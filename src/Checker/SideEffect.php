@@ -30,9 +30,11 @@ class SideEffect extends CheckerTemplate implements CheckerInterface
             },
             function ($node) {
                 // for example: ini_set('error_reporting', E_ALL);
-                if (($node instanceof \PhpParser\Node\Expr\FuncCall) &&
-                    ($node->name->parts[0] = 'ini_set')) {
-                    return self::SIDE_EFFECT;
+                if ($node instanceof \PhpParser\Node\Expr\FuncCall) {
+                    $parts = $node->name->parts[0] ?? '';
+                    if ($parts == 'ini_set') {
+                        return self::SIDE_EFFECT;
+                    }
                 }
             },
             function ($node) {
