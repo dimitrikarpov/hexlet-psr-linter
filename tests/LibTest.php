@@ -55,4 +55,25 @@ class FunctionsNamingTest extends \PHPUnit\Framework\TestCase
         $errors = lint($code);
         $this->assertFalse(empty($errors));
     }
+
+    public function testDeclarationsOnlyFile()
+    {
+        $code = file_get_contents('tests/fixtures/declarations.php');
+        $errors = lint($code);
+        $this->assertFalse($errors);
+    }
+
+    public function testSideEffectsOnlyFile()
+    {
+        $code = file_get_contents('tests/fixtures/sideEffects.php');
+        $errors = lint($code);
+        $this->assertFalse($errors);
+    }
+
+    public function testDeclarationsAndSideEffectsContainingFile()
+    {
+        $code = file_get_contents('tests/fixtures/declarationsAndSideEffects.php');
+        $errors = lint($code);
+        $this->assertFalse(empty($errors));
+    }
 }
