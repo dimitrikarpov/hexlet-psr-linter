@@ -4,6 +4,39 @@ namespace PsrLinter;
 
 use function PsrLinter\makeLinter;
 
+/**
+ * Command line interface fo Hexlet-PSR-Linter library
+ *
+ * Options array example:
+ *
+ * $options = [
+ *   'rules' = [
+ *       new Rules\FunctionsNamingForCamelCase(),
+ *       new Rules\VariablesNamingForCamelCase(),
+ *       new Rules\SideEffect()
+ *   ],
+ *   'fixerEnabled' => false
+ * ];
+ *
+ * Errors array example:
+ *
+ * $errors = [
+ * 'file.php' => [
+ *          [ 'error', 'line', 'reason' ... ],
+ *          [ 'warning', 'line', 'reason' ...],
+ *  ],
+ *  'file2.php' => [
+ *          [ 'error', 'line', 'reason' ...],
+ *          [ 'error', 'line', 'reason' ...],
+ *  ],
+ * .......
+ * ];
+ *
+ * @param string $path file or directory to lint
+ * @param array $options rules and fixerEnabled flag
+ *
+ * @return array|bool errors or false
+ */
 function lintCli($path, $options = [])
 {
     $fixerEnabled = $options['fixerEnabled'] ?? false;
@@ -31,20 +64,6 @@ function lintCli($path, $options = [])
             return [$path];
         }
     };
-
-    /**
-     * $errors = [
-     * 'file.php' => [
-     *          [ 'error', 'line', 'reason' ... ],
-     *          [ 'warning', 'line', 'reason' ...],
-     *  ],
-     *  'file2.php' => [
-     *          [ 'error', 'line', 'reason' ...],
-     *          [ 'error', 'line', 'reason' ...],
-     *  ],
-     * .......
-     * ];
-     */
 
     $files = $getFiles($path);
     $errors = [];
