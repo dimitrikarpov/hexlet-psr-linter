@@ -2,24 +2,14 @@
 
 namespace PsrLinter\Rules;
 
-class VariablesNamingForCamelCase extends RulesTemplate implements RulesInterface
+class VariablesNamingForCamelCase extends FixersTemplate implements RulesInterface
 {
-    /**
-     * @param \PhpParser\Node $node
-     *
-     * @return bool true if violation found
-     */
     public function check(\PhpParser\Node $node)
     {
         if (( $node instanceof \PhpParser\Node\Expr\Variable ) &&
             (!preg_match('/^[a-z]+([A-Z]?[a-z]+)+$/', $node->name))
         ) {
-            $this->errors[] = [
-                'line'   => $node->getAttribute('startLine'),
-                'type'   => 'error',
-                'where'  => $node->name,
-                'reason' => 'Names MUST be declared in camelCase.'
-            ];
+            $this->addError($node, 'error', 'Names MUST be declared in camelCase.');
 
             return true;
         }

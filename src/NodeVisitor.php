@@ -4,6 +4,7 @@ namespace PsrLinter;
 
 use \PhpParser\Node;
 use \PhpParser\NodeVisitorAbstract;
+use PsrLinter\Rules\FixersTemplate;
 
 class NodeVisitor extends NodeVisitorAbstract
 {
@@ -20,7 +21,7 @@ class NodeVisitor extends NodeVisitorAbstract
     {
         foreach ($this->rules as $checker) {
             $violationFound = $checker->check($node);
-            if ($violationFound && $this->fixerEnabled && method_exists($checker, 'fix')) {
+            if ($violationFound && $this->fixerEnabled && ($checker instanceof FixersTemplate)) {
                 $checker->fix($node);
             }
         }

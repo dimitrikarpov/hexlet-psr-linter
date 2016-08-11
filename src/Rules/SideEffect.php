@@ -2,7 +2,7 @@
 
 namespace PsrLinter\Rules;
 
-class SideEffect extends RulesTemplate implements RulesInterface
+class SideEffect extends CheckersTemplate implements RulesInterface
 {
     const DECLARATION = 'declaration';
     const SIDE_EFFECT = 'side effect';
@@ -87,13 +87,10 @@ class SideEffect extends RulesTemplate implements RulesInterface
 
         if ($this->containsSideEffects && $this->containsDeclarations) {
             $this->containsMixed = true;
-            $this->errors[] = [
-                'line'   => $node->getAttribute('startLine'),
-                'type'   => 'error',
-                'where'  => $definition,
-                'reason' => 'A file SHOULD declare new symbols (classes, functions, constants, etc.) and cause no ' .
-                            'other side effects, or it SHOULD execute logic with side effects, but SHOULD NOT do both.'
-            ];
+
+            $reason ='A file SHOULD declare new symbols (classes, functions, constants, etc.) and cause no ' .
+                     'other side effects, or it SHOULD execute logic with side effects, but SHOULD NOT do both.';
+            $this->addError($node, 'error', $reason, $definition);
         }
     }
 }
