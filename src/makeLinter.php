@@ -10,17 +10,17 @@ use \PhpParser\PrettyPrinter;
 function makeLinter($fixerEnabled = false)
 {
     $checkers = [
-        new Checker\FunctionsNamingForCamelCase($fixerEnabled),
-        new Checker\VariableNamingForCamelCase($fixerEnabled),
-        new Checker\VariableNamingForLeadUnderscore($fixerEnabled),
-        new Checker\SideEffect($fixerEnabled)
+        new Checker\FunctionsNamingForCamelCase(),
+        new Checker\VariableNamingForCamelCase(),
+        new Checker\VariableNamingForLeadUnderscore(),
+        new Checker\SideEffect()
     ];
 
     return function ($code) use ($checkers, $fixerEnabled) {
         $linterReport = [];
 
         $parser    = (new ParserFactory)->create(ParserFactory::PREFER_PHP7);
-        $visitor   = new NodeVisitor($checkers);
+        $visitor   = new NodeVisitor($checkers, $fixerEnabled);
         $traverser = new \PhpParser\NodeTraverser();
         $traverser->addVisitor($visitor);
 

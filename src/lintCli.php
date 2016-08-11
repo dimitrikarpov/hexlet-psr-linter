@@ -49,7 +49,7 @@ function lintCli($path, $fixerEnabled = false)
 
         if ($fixerEnabled) {
             $result = file_put_contents($file, $linterReport['fixedCode']);
-            // TODO : write file exception
+            // TODO : write file exception if $result == false
         }
     }
 

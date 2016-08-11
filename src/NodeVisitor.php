@@ -8,16 +8,21 @@ use \PhpParser\NodeVisitorAbstract;
 class NodeVisitor extends NodeVisitorAbstract
 {
     private $checkers = [];
+    private $fixerEnabled;
 
-    public function __construct($checkers)
+    public function __construct($checkers, $fixerEnabled)
     {
         $this->checkers = $checkers;
+        $this->fixerEnabled = $fixerEnabled;
     }
 
     public function leaveNode(Node $node)
     {
         foreach ($this->checkers as $checker) {
-            $checker->check($node);
+            $violation = $checker->check($node);
+            if ($violation && $this->fixerEnabled && method_exists($checker, 'fix')) {
+                $checker->fix($node);
+            }
         }
     }
 

@@ -86,7 +86,7 @@ class CheckersTest extends \PHPUnit\Framework\TestCase
         $lint = $this->lint;
         $linterReport = $lint($code);
         $errors = $linterReport['errors'];
-        
+
         $this->assertFalse(empty($errors));
     }
 }

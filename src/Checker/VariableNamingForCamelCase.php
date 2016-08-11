@@ -16,9 +16,7 @@ class VariableNamingForCamelCase extends CheckerTemplate implements CheckerInter
                 'reason' => 'Names MUST be declared in camelCase.'
             ];
 
-            if ($this->fixerEnabled) {
-                $this->fix($node);
-            }
+            return true;
         }
     }
 
