@@ -4,6 +4,11 @@ namespace PsrLinter\Checker;
 
 class VariableNamingForCamelCase extends CheckerTemplate implements CheckerInterface
 {
+    /**
+     * @param \PhpParser\Node $node
+     *
+     * @return bool true if violation found
+     */
     public function check(\PhpParser\Node $node)
     {
         if (( $node instanceof \PhpParser\Node\Expr\Variable ) &&

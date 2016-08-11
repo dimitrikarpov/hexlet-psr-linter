@@ -37,13 +37,14 @@ class CheckersTest extends \PHPUnit\Framework\TestCase
 
     public function testVariablesNamingWrong()
     {
-        $code = file_get_contents('tests/fixtures/functionsNaming.wrong.php');
+        $code = file_get_contents('tests/fixtures/variablesNaming.wrong.php');
 
-        $lint = $this->lint;
+        $lint = makeLinter(true);
         $linterReport = $lint($code);
-        $errors = $linterReport['errors'];
+        $actual = $linterReport['fixedCode'];
+        $expected = file_get_contents('tests/fixtures/variablesNaming.right.php');
 
-        $this->assertFalse(empty($errors));
+        $this->assertEquals($expected, $actual);
     }
 
     public function testVariablesNamingRight()

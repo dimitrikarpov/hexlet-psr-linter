@@ -19,8 +19,8 @@ class NodeVisitor extends NodeVisitorAbstract
     public function leaveNode(Node $node)
     {
         foreach ($this->checkers as $checker) {
-            $violation = $checker->check($node);
-            if ($violation && $this->fixerEnabled && method_exists($checker, 'fix')) {
+            $violationFound = $checker->check($node);
+            if ($violationFound && $this->fixerEnabled && method_exists($checker, 'fix')) {
                 $checker->fix($node);
             }
         }
