@@ -4,9 +4,17 @@ namespace PsrLinter;
 
 use function PsrLinter\makeLinter;
 
-function lintCli($path, $fixerEnabled = false)
+function lintCli($path, $options = [])
 {
-    $lint = makeLinter($fixerEnabled);
+    $fixerEnabled = $options['fixerEnabled'] ?? false;
+    $checkers = $options['checkers'] ?? [
+            new Checker\FunctionsNamingForCamelCase(),
+            new Checker\VariableNamingForCamelCase(),
+            new Checker\VariableNamingForLeadUnderscore(),
+            new Checker\SideEffect()
+        ];
+
+    $lint = makeLinter($checkers, $fixerEnabled);
 
     /**
      * @param string $path filename or directory

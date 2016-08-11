@@ -6,52 +6,67 @@ use function PsrLinter\makeLinter;
 
 class CheckersTest extends \PHPUnit\Framework\TestCase
 {
-    protected $lint;
-
-    public function setUp()
+    public function testFunctionsNamingForCamelCaseWrong()
     {
-        $this->lint = makeLinter();
-    }
+        $code = file_get_contents('tests/fixtures/functionsNamingForCamelCase.wrong.php');
 
-    public function testFunctionsNamingWrong()
-    {
-        $code = file_get_contents('tests/fixtures/functionsNaming.wrong.php');
-
-        $lint = $this->lint;
+        $lint = makeLinter([new Checker\FunctionsNamingForCamelCase()]);
         $linterReport = $lint($code);
         $errors = $linterReport['errors'];
 
         $this->assertFalse(empty($errors));
     }
 
-    public function testFunctionsNamingRight()
+    public function testFunctionsNamingForCamelCaseRight()
     {
-        $code = file_get_contents('tests/fixtures/functionsNaming.right.php');
+        $code = file_get_contents('tests/fixtures/functionsNamingForCamelCase.right.php');
 
-        $lint = $this->lint;
+        $lint = makeLinter([new Checker\FunctionsNamingForCamelCase()]);
         $linterReport = $lint($code);
         $errors = $linterReport['errors'];
 
         $this->assertFalse($errors);
     }
 
-    public function testVariablesNamingWrong()
+    public function testVariablesNamingForCamelCaseWrong()
     {
-        $code = file_get_contents('tests/fixtures/variablesNaming.wrong.php');
+        $code = file_get_contents('tests/fixtures/variablesNamingForCamelCase.wrong.php');
 
-        $lint = makeLinter(true);
+        $lint = makeLinter([new Checker\VariableNamingForCamelCase()], true);
         $linterReport = $lint($code);
         $actual = $linterReport['fixedCode'];
-        $expected = file_get_contents('tests/fixtures/variablesNaming.right.php');
+        $expected = file_get_contents('tests/fixtures/variablesNamingForCamelCase.right.php');
 
         $this->assertEquals($expected, $actual);
     }
 
-    public function testVariablesNamingRight()
+    public function testVariablesNamingForCamelCaseRight()
     {
-        $code = file_get_contents('tests/fixtures/variablesNaming.right.php');
+        $code = file_get_contents('tests/fixtures/variablesNamingForCamelCase.right.php');
 
-        $lint = $this->lint;
+        $lint = makeLinter([new Checker\VariableNamingForCamelCase()]);
+        $linterReport = $lint($code);
+        $errors = $linterReport['errors'];
+
+        $this->assertFalse($errors);
+    }
+
+    public function testVariableNamingForLeadingUnderscoreWrong()
+    {
+        $code = file_get_contents('tests/fixtures/variableNamingForLeadingUnderscore.wrong.php');
+
+        $lint = makeLinter([new Checker\VariableNamingForLeadUnderscore()]);
+        $linterReport = $lint($code);
+        $errors = $linterReport['errors'];
+
+        $this->assertFalse(empty($errors));
+    }
+
+    public function testVariableNamingForLeadingUnderscoreRight()
+    {
+        $code = file_get_contents('tests/fixtures/variableNamingForLeadingUnderscore.right.php');
+        
+        $lint = makeLinter([new Checker\VariableNamingForLeadUnderscore()]);
         $linterReport = $lint($code);
         $errors = $linterReport['errors'];
 
@@ -62,7 +77,7 @@ class CheckersTest extends \PHPUnit\Framework\TestCase
     {
         $code = file_get_contents('tests/fixtures/declarations.php');
 
-        $lint = $this->lint;
+        $lint = makeLinter([new Checker\SideEffect()]);
         $linterReport = $lint($code);
         $errors = $linterReport['errors'];
 
@@ -73,7 +88,7 @@ class CheckersTest extends \PHPUnit\Framework\TestCase
     {
         $code = file_get_contents('tests/fixtures/sideEffects.php');
 
-        $lint = $this->lint;
+        $lint = makeLinter([new Checker\SideEffect()]);
         $linterReport = $lint($code);
         $errors = $linterReport['errors'];
 
@@ -84,7 +99,7 @@ class CheckersTest extends \PHPUnit\Framework\TestCase
     {
         $code = file_get_contents('tests/fixtures/declarationsAndSideEffects.php');
 
-        $lint = $this->lint;
+        $lint = makeLinter([new Checker\SideEffect()]);
         $linterReport = $lint($code);
         $errors = $linterReport['errors'];
 

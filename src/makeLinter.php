@@ -7,15 +7,8 @@ use \PhpParser\NodeTraverser;
 use \PhpParser\ParserFactory;
 use \PhpParser\PrettyPrinter;
 
-function makeLinter($fixerEnabled = false)
+function makeLinter(array $checkers, $fixerEnabled = false)
 {
-    $checkers = [
-        new Checker\FunctionsNamingForCamelCase(),
-        new Checker\VariableNamingForCamelCase(),
-        new Checker\VariableNamingForLeadUnderscore(),
-        new Checker\SideEffect()
-    ];
-
     return function ($code) use ($checkers, $fixerEnabled) {
         $linterReport = [];
 

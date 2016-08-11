@@ -6,19 +6,12 @@ use function PsrLinter\makeLinter;
 
 class LibTest extends \PHPUnit\Framework\TestCase
 {
-    protected $lint;
-
-    public function setUp()
-    {
-        $this->lint = makeLinter();
-    }
-
     /**
      * Test parseException
      */
     public function testParseException()
     {
-        $lint = $this->lint;
+        $lint = makeLinter([new Checker\VariableNamingForCamelCase()], false);
 
         $this->expectException(ExceptionParse::class);
         $lint('<?php fun(t!0n');

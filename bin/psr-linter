@@ -20,8 +20,8 @@ $cmd->option()
     ->setHelp('Validate php files according PSR2 standards' . PHP_EOL . PHP_EOL. 'Usage: psr-linter <file>');
 
 $flags = $cmd->getFlagValues();
-
-$errors = lintCli($cmd[0], $flags['fix']);
+$options = ['fixerEnabled' => $flags['fix']];
+$errors = lintCli($cmd[0], $options);
 
 if ($errors) {
     file_put_contents('php://stderr', reportText($errors));
