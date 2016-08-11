@@ -1,8 +1,8 @@
 <?php
 
-namespace PsrLinter\Checker;
+namespace PsrLinter\Rules;
 
-class VariableNamingForCamelCase extends CheckerTemplate implements CheckerInterface
+class VariablesNamingForCamelCase extends RulesTemplate implements RulesInterface
 {
     /**
      * @param \PhpParser\Node $node

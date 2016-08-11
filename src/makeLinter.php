@@ -7,13 +7,13 @@ use \PhpParser\NodeTraverser;
 use \PhpParser\ParserFactory;
 use \PhpParser\PrettyPrinter;
 
-function makeLinter(array $checkers, $fixerEnabled = false)
+function makeLinter(array $rules, $fixerEnabled = false)
 {
-    return function ($code) use ($checkers, $fixerEnabled) {
+    return function ($code) use ($rules, $fixerEnabled) {
         $linterReport = [];
 
         $parser    = (new ParserFactory)->create(ParserFactory::PREFER_PHP7);
-        $visitor   = new NodeVisitor($checkers, $fixerEnabled);
+        $visitor   = new NodeVisitor($rules, $fixerEnabled);
         $traverser = new \PhpParser\NodeTraverser();
         $traverser->addVisitor($visitor);
 

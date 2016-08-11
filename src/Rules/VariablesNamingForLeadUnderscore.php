@@ -1,8 +1,8 @@
 <?php
 
-namespace PsrLinter\Checker;
+namespace PsrLinter\Rules;
 
-class VariableNamingForLeadUnderscore extends CheckerTemplate implements CheckerInterface
+class VariablesNamingForLeadUnderscore extends RulesTemplate implements RulesInterface
 {
     public function check(\PhpParser\Node $node)
     {

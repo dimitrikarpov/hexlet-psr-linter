@@ -1,8 +1,8 @@
 <?php
 
-namespace PsrLinter\Checker;
+namespace PsrLinter\Rules;
 
-class SideEffect extends CheckerTemplate implements CheckerInterface
+class SideEffect extends RulesTemplate implements RulesInterface
 {
     const DECLARATION = 'declaration';
     const SIDE_EFFECT = 'side effect';

@@ -7,18 +7,18 @@ use \PhpParser\NodeVisitorAbstract;
 
 class NodeVisitor extends NodeVisitorAbstract
 {
-    private $checkers = [];
+    private $rules = [];
     private $fixerEnabled;
 
-    public function __construct($checkers, $fixerEnabled)
+    public function __construct(array $rules, $fixerEnabled)
     {
-        $this->checkers = $checkers;
+        $this->rules = $rules;
         $this->fixerEnabled = $fixerEnabled;
     }
 
     public function leaveNode(Node $node)
     {
-        foreach ($this->checkers as $checker) {
+        foreach ($this->rules as $checker) {
             $violationFound = $checker->check($node);
             if ($violationFound && $this->fixerEnabled && method_exists($checker, 'fix')) {
                 $checker->fix($node);
@@ -29,7 +29,7 @@ class NodeVisitor extends NodeVisitorAbstract
     public function getErrors()
     {
         $errors = [];
-        foreach ($this->checkers as $checker) {
+        foreach ($this->rules as $checker) {
             $checkerErrors = $checker->getErrors();
             if ($checkerErrors) {
                 $errors = array_merge($errors, $checkerErrors);

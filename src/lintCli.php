@@ -7,14 +7,14 @@ use function PsrLinter\makeLinter;
 function lintCli($path, $options = [])
 {
     $fixerEnabled = $options['fixerEnabled'] ?? false;
-    $checkers = $options['checkers'] ?? [
-            new Checker\FunctionsNamingForCamelCase(),
-            new Checker\VariableNamingForCamelCase(),
-            new Checker\VariableNamingForLeadUnderscore(),
-            new Checker\SideEffect()
+    $rules = $options['rules'] ?? [
+            new Rules\FunctionsNamingForCamelCase(),
+            new Rules\VariablesNamingForLeadUnderscore(),
+            new Rules\VariablesNamingForCamelCase(),
+            new Rules\SideEffect()
         ];
 
-    $lint = makeLinter($checkers, $fixerEnabled);
+    $lint = makeLinter($rules, $fixerEnabled);
 
     /**
      * @param string $path filename or directory

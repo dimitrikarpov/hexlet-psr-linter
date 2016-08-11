@@ -1,8 +1,8 @@
 <?php
 
-namespace PsrLinter\Checker;
+namespace PsrLinter\Rules;
 
-class FunctionsNamingForCamelCase extends CheckerTemplate implements CheckerInterface
+class FunctionsNamingForCamelCase extends RulesTemplate implements RulesInterface
 {
     public function check(\PhpParser\Node $node)
     {

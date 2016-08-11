@@ -1,8 +1,8 @@
 <?php
 
-namespace PsrLinter\Checker;
+namespace PsrLinter\Rules;
 
-abstract class CheckerTemplate implements CheckerInterface
+abstract class RulesTemplate implements RulesInterface
 {
     protected $errors = [];
 
