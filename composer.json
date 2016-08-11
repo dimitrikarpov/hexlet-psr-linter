@@ -4,7 +4,8 @@
   "bin": ["bin/psr-linter"],
   "require": {
     "nikic/php-parser": "*",
-    "nategood/commando": "*"
+    "nategood/commando": "*",
+    "symfony/yaml": "*"
   },
   "require-dev": {
     "phpunit/phpunit": "^5.2",
@@ -17,8 +18,8 @@
     },
     "files": [
       "src/makeLinter.php",
-      "src/reportText.php",
-      "src/lintCli.php"
+      "src/lintCli.php",
+      "src/report.php"
     ]
   }
 }

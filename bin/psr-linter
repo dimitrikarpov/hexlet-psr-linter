@@ -6,7 +6,7 @@ require_once __DIR__ . '/../vendor/autoload.php';
 
 use \Commando\Command;
 use function \PsrLinter\lintCli;
-use function \PsrLinter\reportText;
+use function \PsrLinter\report;
 
 $cmd = new Commando\Command();
 
@@ -24,7 +24,7 @@ $options = ['fixerEnabled' => $flags['fix']];
 $errors = lintCli($cmd[0], $options);
 
 if ($errors) {
-    file_put_contents('php://stderr', reportText($errors));
+    file_put_contents('php://stderr', report($errors));
     exit(1);
 }
 
