@@ -6,26 +6,24 @@ require_once __DIR__ . '/../vendor/autoload.php';
 
 use \Commando\Command;
 use function \PsrLinter\lintCli;
-use function \PsrLinter\report;
 
-$cmd = new Commando\Command();
+$cmd = new Command();
 
 $cmd->option()
     ->require(true)
     ->describedAs('One or more files and/or directories to check')
-    ->expectsFile()
-    ->flag('fix')
+    ->expectsFile();
+$cmd->flag('fix')
     ->describedAs('fix violations')
-    ->boolean()
-    ->setHelp('Validate php files according PSR2 standards' . PHP_EOL . PHP_EOL. 'Usage: psr-linter <file>');
+    ->boolean();
+$cmd->flag('report-file')
+    ->describedAs('Save report to file. STDERR suppressed in case of no violations');
+$cmd->flag('report-format')
+    ->must(function ($format) {
+        return in_array($format, ['text', 'json', 'yaml']);
+    })
+    ->describedAs("Report format: 'text', 'json' and 'yaml' avilable");
+$cmd->setHelp("Validate php files according PSR2 standards\n\n" .
+              "Usage: psr-linter file [--fix] [--report-file file] [--report-format format]");
 
-$flags = $cmd->getFlagValues();
-$options = ['fixerEnabled' => $flags['fix']];
-$errors = lintCli($cmd[0], $options);
-
-if ($errors) {
-    file_put_contents('php://stderr', report($errors));
-    exit(1);
-}
-
-exit(0);
+exit(lintCli($cmd[0], $cmd->getFlagValues()));

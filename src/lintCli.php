@@ -3,6 +3,7 @@
 namespace PsrLinter;
 
 use function PsrLinter\makeLinter;
+use function \PsrLinter\report;
 
 /**
  * Command line interface fo Hexlet-PSR-Linter library
@@ -35,11 +36,13 @@ use function PsrLinter\makeLinter;
  * @param string $path file or directory to lint
  * @param array $options rules and fixerEnabled flag
  *
- * @return array|bool errors or false
+ * @return integer exit code '0' for no errors and '1' if files have errors
  */
 function lintCli($path, $options = [])
 {
-    $fixerEnabled = $options['fixerEnabled'] ?? false;
+    $fixerEnabled = $options['fix'] ?? false;
+    $pathReport = $options['report-file'] ?? false;
+    $reportFormat = $options['report-format'] ?? 'text';
     $rules = $options['rules'] ?? [
             new Rules\FunctionsNamingForCamelCase(),
             new Rules\VariablesNamingForLeadUnderscore(),
@@ -65,20 +68,32 @@ function lintCli($path, $options = [])
         }
     };
 
-    $files = $getFiles($path);
-    $errors = [];
-    foreach ($files as $file) {
-        $linterReport = $lint(file_get_contents($file));
-        $fileErrors = $linterReport['errors'];
-        if ($fileErrors) {
-            $errors[$file] = $fileErrors;
+    $lintAndFix = function ($files) use ($lint, $fixerEnabled) {
+        $errors = [];
+        foreach ($files as $file) {
+            $linterReport = $lint(file_get_contents($file));
+            $fileErrors = $linterReport['errors'];
+            if ($fileErrors) {
+                $errors[$file] = $fileErrors;
+            }
+
+            if ($fixerEnabled) {
+                file_put_contents($file, $linterReport['fixedCode']);
+            }
         }
 
-        if ($fixerEnabled) {
-            $result = file_put_contents($file, $linterReport['fixedCode']);
-            // TODO : write file exception if $result == false
-        }
+        return empty($errors) ? false : $errors;
+    };
+
+    $errors = $lintAndFix($getFiles($path));
+    if ($errors && $pathReport) {
+        file_put_contents('php://stderr', "Violations found. Report: {$pathReport}");
+        file_put_contents($pathReport, report($errors, $reportFormat));
+        return 1;
+    } elseif ($errors) {
+        file_put_contents('php://stderr', report($errors, $reportFormat));
+        return 1;
     }
 
-    return empty($errors) ? false : $errors;
+    return 0;
 }
