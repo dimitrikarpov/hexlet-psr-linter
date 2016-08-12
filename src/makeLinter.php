@@ -26,8 +26,8 @@ function makeLinter(array $rules, $fixerEnabled = false)
                     'errors' => $visitor->getErrors()
                 ];
             }
-            return ['errors' => $visitor->getErrors()];
 
+            return ['errors' => $visitor->getErrors()];
         } catch (\PhpParser\Error $e) {
             throw new ExceptionParse();
         }

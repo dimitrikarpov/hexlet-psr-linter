@@ -8,7 +8,6 @@ install:
 
 script:
   - make lint test
-  - make selftest
 
 after_script:
   - vendor/bin/test-reporter
