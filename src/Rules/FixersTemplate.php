@@ -18,9 +18,11 @@ abstract class FixersTemplate implements RulesInterface
         ];
     }
 
-    public function getErrors()
+    public function flushErrors()
     {
-        return empty($this->errors) ? false : $this->errors;
+        $errors = $this->errors;
+        $this->errors = [];
+        return empty($errors) ? false : $errors;
     }
 
     abstract public function check(\PhpParser\Node $node);

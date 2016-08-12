@@ -14,5 +14,5 @@ interface RulesInterface
     /**
      * @return mixed array or false in case of no violations found
      */
-    public function getErrors();
+    public function flushErrors();
 }

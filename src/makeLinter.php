@@ -10,8 +10,6 @@ use \PhpParser\PrettyPrinter;
 function makeLinter(array $rules, $fixerEnabled = false)
 {
     return function ($code) use ($rules, $fixerEnabled) {
-        $linterReport = [];
-
         $parser    = (new ParserFactory)->create(ParserFactory::PREFER_PHP7);
         $visitor   = new NodeVisitor($rules, $fixerEnabled);
         $traverser = new \PhpParser\NodeTraverser();
@@ -23,14 +21,15 @@ function makeLinter(array $rules, $fixerEnabled = false)
 
             if ($fixerEnabled) {
                 $prettyPrinter = new PrettyPrinter\Standard;
-                $linterReport['fixedCode'] = $prettyPrinter->prettyPrintFile($stmts);
+                return [
+                    'fixedCode' => $prettyPrinter->prettyPrintFile($stmts),
+                    'errors' => $visitor->getErrors()
+                ];
             }
+            return ['errors' => $visitor->getErrors()];
+
         } catch (\PhpParser\Error $e) {
             throw new ExceptionParse();
         }
-
-        $linterReport['errors'] = $visitor->getErrors();
-
-        return $linterReport;
     };
 }

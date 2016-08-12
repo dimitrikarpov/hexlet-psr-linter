@@ -31,7 +31,7 @@ class NodeVisitor extends NodeVisitorAbstract
     {
         $errors = [];
         foreach ($this->rules as $checker) {
-            $checkerErrors = $checker->getErrors();
+            $checkerErrors = $checker->flushErrors();
             if ($checkerErrors) {
                 $errors = array_merge($errors, $checkerErrors);
             }

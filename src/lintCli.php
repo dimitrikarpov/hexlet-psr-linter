@@ -79,10 +79,10 @@ function lintCli($path, $options = [])
             $className = "\\PsrLinter\\Rules\\$rule";
 
             if (!$ruleset) {
-                include $sniffer;
+                require_once $sniffer;
                 $rules[]  = new $className();
             } elseif (in_array($rule, $ruleset)) {
-                include $sniffer;
+                require_once $sniffer;
                 $rules[]  = new $className();
             }
         }
