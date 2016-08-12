@@ -40,17 +40,10 @@ use function \PsrLinter\report;
  */
 function lintCli($path, $options = [])
 {
-    $fixerEnabled = $options['fix'] ?? false;
+    $fixerEnabled = $options['fix'];
     $pathReport = $options['report-file'] ?? false;
     $reportFormat = $options['report-format'] ?? 'text';
-    $rules = $options['rules'] ?? [
-            new Rules\FunctionsNamingForCamelCase(),
-            new Rules\VariablesNamingForLeadUnderscore(),
-            new Rules\VariablesNamingForCamelCase(),
-            new Rules\SideEffect()
-        ];
-
-    $lint = makeLinter($rules, $fixerEnabled);
+    $sniffs = $options['sniffs'] ?? 'sniffs';
 
     /**
      * @param string $path filename or directory
@@ -68,7 +61,38 @@ function lintCli($path, $options = [])
         }
     };
 
-    $lintAndFix = function ($files) use ($lint, $fixerEnabled) {
+    $getRuleset = function ($path) {
+        if ($path) {
+            return json_decode(file_get_contents($path));
+            // TODO: throw exception 'json not valid'
+        } else {
+            return false;
+        }
+    };
+
+    $getRules = function ($sniffers, $ruleset) {
+        $rules = [];
+
+        foreach ($sniffers as $sniffer) {
+            $pathinfo = pathinfo($sniffer);
+            $rule     = $pathinfo['filename'];
+            $className = "\\PsrLinter\\Rules\\$rule";
+
+            if (!$ruleset) {
+                include $sniffer;
+                $rules[]  = new $className();
+            } elseif (in_array($rule, $ruleset)) {
+                include $sniffer;
+                $rules[]  = new $className();
+            }
+        }
+
+        return $rules;
+    };
+
+    $lintAndFix = function ($files, $rules) use ($fixerEnabled) {
+        $lint = makeLinter($rules, $fixerEnabled);
+
         $errors = [];
         foreach ($files as $file) {
             $linterReport = $lint(file_get_contents($file));
@@ -85,7 +109,10 @@ function lintCli($path, $options = [])
         return empty($errors) ? false : $errors;
     };
 
-    $errors = $lintAndFix($getFiles($path));
+    $rules = $getRules($getFiles($sniffs), $getRuleset($options['ruleset']));
+    $files = $getFiles($path);
+    $errors = $lintAndFix($files, $rules);
+
     if ($errors && $pathReport) {
         file_put_contents('php://stderr', "Violations found. Report: {$pathReport}");
         file_put_contents($pathReport, report($errors, $reportFormat));

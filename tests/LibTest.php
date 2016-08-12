@@ -11,8 +11,8 @@ class LibTest extends \PHPUnit\Framework\TestCase
      */
     public function testParseException()
     {
-        $lint = makeLinter([new Rules\VariablesNamingForCamelCase()], false);
-
+        require_once 'sniffs/VariablesNamingForCamelCase.php';
+        $lint = makeLinter([new Rules\VariablesNamingForCamelCase()]);
         $this->expectException(ExceptionParse::class);
         $lint('<?php fun(t!0n');
     }

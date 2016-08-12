@@ -10,6 +10,7 @@ class CheckersTest extends \PHPUnit\Framework\TestCase
     {
         $code = file_get_contents('tests/fixtures/functionsNamingForCamelCase.wrong.php');
 
+        require_once 'sniffs/FunctionsNamingForCamelCase.php';
         $lint = makeLinter([new Rules\FunctionsNamingForCamelCase()]);
         $linterReport = $lint($code);
         $errors = $linterReport['errors'];
@@ -21,6 +22,7 @@ class CheckersTest extends \PHPUnit\Framework\TestCase
     {
         $code = file_get_contents('tests/fixtures/functionsNamingForCamelCase.right.php');
 
+        require_once 'sniffs/FunctionsNamingForCamelCase.php';
         $lint = makeLinter([new Rules\FunctionsNamingForCamelCase()]);
         $linterReport = $lint($code);
         $errors = $linterReport['errors'];
@@ -32,6 +34,7 @@ class CheckersTest extends \PHPUnit\Framework\TestCase
     {
         $code = file_get_contents('tests/fixtures/variablesNamingForCamelCase.wrong.php');
 
+        require_once 'sniffs/VariablesNamingForCamelCase.php';
         $lint = makeLinter([new Rules\VariablesNamingForCamelCase()], true);
         $linterReport = $lint($code);
         $actual = $linterReport['fixedCode'];
@@ -44,6 +47,7 @@ class CheckersTest extends \PHPUnit\Framework\TestCase
     {
         $code = file_get_contents('tests/fixtures/variablesNamingForCamelCase.right.php');
 
+        require_once 'sniffs/VariablesNamingForCamelCase.php';
         $lint = makeLinter([new Rules\VariablesNamingForCamelCase()]);
         $linterReport = $lint($code);
         $errors = $linterReport['errors'];
@@ -55,6 +59,7 @@ class CheckersTest extends \PHPUnit\Framework\TestCase
     {
         $code = file_get_contents('tests/fixtures/variablesNamingForLeadingUnderscore.wrong.php');
 
+        require_once 'sniffs/VariablesNamingForLeadUnderscore.php';
         $lint = makeLinter([new Rules\VariablesNamingForLeadUnderscore()]);
         $linterReport = $lint($code);
         $errors = $linterReport['errors'];
@@ -66,6 +71,7 @@ class CheckersTest extends \PHPUnit\Framework\TestCase
     {
         $code = file_get_contents('tests/fixtures/variablesNamingForLeadingUnderscore.right.php');
 
+        require_once 'sniffs/VariablesNamingForLeadUnderscore.php';
         $lint = makeLinter([new Rules\VariablesNamingForLeadUnderscore()]);
         $linterReport = $lint($code);
         $errors = $linterReport['errors'];
@@ -77,6 +83,7 @@ class CheckersTest extends \PHPUnit\Framework\TestCase
     {
         $code = file_get_contents('tests/fixtures/declarations.php');
 
+        require_once 'sniffs/SideEffect.php';
         $lint = makeLinter([new Rules\SideEffect()]);
         $linterReport = $lint($code);
         $errors = $linterReport['errors'];
@@ -88,6 +95,7 @@ class CheckersTest extends \PHPUnit\Framework\TestCase
     {
         $code = file_get_contents('tests/fixtures/sideEffects.php');
 
+        require_once 'sniffs/SideEffect.php';
         $lint = makeLinter([new Rules\SideEffect()]);
         $linterReport = $lint($code);
         $errors = $linterReport['errors'];
@@ -99,6 +107,7 @@ class CheckersTest extends \PHPUnit\Framework\TestCase
     {
         $code = file_get_contents('tests/fixtures/declarationsAndSideEffects.php');
 
+        require_once 'sniffs/SideEffect.php';
         $lint = makeLinter([new Rules\SideEffect()]);
         $linterReport = $lint($code);
         $errors = $linterReport['errors'];

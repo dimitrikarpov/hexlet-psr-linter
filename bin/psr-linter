@@ -22,8 +22,16 @@ $cmd->flag('report-format')
     ->must(function ($format) {
         return in_array($format, ['text', 'json', 'yaml']);
     })
-    ->describedAs("Report format: 'text', 'json' and 'yaml' avilable");
+    ->describedAs("Report format: 'text', 'json' and 'yaml' available");
+$cmd->flag('sniffs')
+    ->describedAs('Directory with sniffs to use (php files with rules). Use default rules if flag not set')
+    ->expectsFile();
+$cmd->flag('ruleset')
+    ->expectsFile()
+    ->describedAs('Json file with list of shiffs to use, Use all sniffs if flag not set');
 $cmd->setHelp("Validate php files according PSR2 standards\n\n" .
-              "Usage: psr-linter file [--fix] [--report-file file] [--report-format format]");
+              "Usage: psr-linter file [--sniffs path] [--ruleset file.json] " .
+              "[--fix] [--report-file file] [--report-format format]\n\n".
+              "Example: psr-linter myProject --sniffs ~/mySniffs --fix --report-file linter.log --report-format yaml");
 
 exit(lintCli($cmd[0], $cmd->getFlagValues()));
