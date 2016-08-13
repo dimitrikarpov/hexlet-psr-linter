@@ -18,7 +18,9 @@ function report(array $errors, $format = 'text')
         case 'text':
             $glueFileErrors = function ($fileErrors) {
                 $strings = array_map(function ($item) {
-                    return implode("\t", $item);
+                    $fixable = $item['fixable'] ? '[x]' : '[ ]';
+                    $format = "%' 4d\t%' 9s\t%s\t%s\t%s";
+                    return sprintf($format, $item['line'], $item['type'], $fixable, $item['where'], $item['reason']);
                 }, $fileErrors);
 
                 return implode("\n", $strings);
