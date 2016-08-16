@@ -90,7 +90,7 @@ class SideEffect extends CheckersTemplate implements RulesInterface
 
             $reason ='A file SHOULD declare new symbols (classes, functions, constants, etc.) and cause no ' .
                      'other side effects, or it SHOULD execute logic with side effects, but SHOULD NOT do both.';
-            $this->addError($node, 'error', $reason, $definition);
+            $this->addError($node, 'warning', $reason, $definition);
         }
     }
 }

@@ -28,7 +28,7 @@ $cmd->flag('sniffs')
     ->expectsFile();
 $cmd->flag('ruleset')
     ->expectsFile()
-    ->describedAs('Json file with list of shiffs to use, Use all sniffs if flag not set');
+    ->describedAs('Json file with list of sniffs to include during checking. Use all sniffs if flag not set');
 $cmd->setHelp("Validate php files according PSR2 standards\n\n" .
               "Usage: psr-linter file [--sniffs path] [--ruleset file.json] " .
               "[--fix] [--report-file file] [--report-format format]\n\n".

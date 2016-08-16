@@ -30,6 +30,9 @@ function report(array $errors, $format = 'text')
                 return implode("\n", [$file, $glueFileErrors($errors)]);
             }, array_keys($errors), $errors);
 
+            $footer = "PSR-LINTER CAN FIX MARKED SNIFF VIOLATIONS AUTOMATICALLY\n";
+            $report[] = $footer;
+
             return implode("\n\n", $report);
 
         case 'json':
