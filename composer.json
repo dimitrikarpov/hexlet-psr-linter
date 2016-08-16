@@ -2,6 +2,18 @@
   "name": "deeem/hexlet-psr-linter",
   "type": "library",
   "bin": ["bin/psr-linter"],
+  "keywords": [
+    "lint",
+    "linter"
+  ],
+  "homepage": "https://github.com/deeem/hexlet-psr-linter",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Dmitry Karpov",
+      "email": "karpov.dimon@gmail.com"
+    }
+  ],
   "require": {
     "nikic/php-parser": "*",
     "nategood/commando": "*",
