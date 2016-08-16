@@ -2,13 +2,26 @@
   "name": "deeem/hexlet-psr-linter",
   "type": "library",
   "bin": ["bin/psr-linter"],
+  "keywords": [
+    "lint",
+    "linter"
+  ],
+  "homepage": "https://github.com/deeem/hexlet-psr-linter",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Dmitry Karpov",
+      "email": "karpov.dimon@gmail.com"
+    }
+  ],
   "require": {
     "nikic/php-parser": "*",
     "nategood/commando": "*",
-    "squizlabs/php_codesniffer": "2.*"
+    "symfony/yaml": "*"
   },
   "require-dev": {
     "phpunit/phpunit": "^5.2",
+    "squizlabs/php_codesniffer": "2.*",
     "codeclimate/php-test-reporter": "dev-master"
   },
   "autoload": {
@@ -16,10 +29,9 @@
       "PsrLinter\\": "src/"
     },
     "files": [
-      "src/lint.php",
-      "src/check.php",
-      "src/report.php",
-      "src/lintDirectory.php"
+      "src/makeLinter.php",
+      "src/lintCli.php",
+      "src/report.php"
     ]
   }
 }

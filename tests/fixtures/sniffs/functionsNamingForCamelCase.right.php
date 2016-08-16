@@ -3,3 +3,7 @@
 function test()
 {
 }
+
+function testFunc()
+{
+}

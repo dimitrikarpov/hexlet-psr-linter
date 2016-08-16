@@ -4,35 +4,39 @@ namespace PsrLinter;
 
 use \PhpParser\Node;
 use \PhpParser\NodeVisitorAbstract;
-use function PsrLinter\checkFunctionsNaming;
+use PsrLinter\Rules\FixersTemplate;
 
 class NodeVisitor extends NodeVisitorAbstract
 {
-    private $errors = [];
+    private $rules = [];
+    private $fixerEnabled;
+
+    public function __construct(array $rules, $fixerEnabled)
+    {
+        $this->rules = $rules;
+        $this->fixerEnabled = $fixerEnabled;
+    }
 
     public function leaveNode(Node $node)
     {
-        // Validate functions naming conventions
-        if ($node instanceof \PhpParser\Node\Stmt\Function_) {
-            $result = checkFunctionsNaming($node->name);
-            if (is_array($result)) {
-                $this->errors[] = [
-                    'line'   => $node->getAttribute('startLine'),
-                    'type'   => $result['type'],
-                    'where'  => $result['where'],
-                    'reason' => $result['reason']
-                ];
+        foreach ($this->rules as $checker) {
+            $violationFound = $checker->check($node);
+            if ($violationFound && $this->fixerEnabled && ($checker instanceof FixersTemplate)) {
+                $checker->fix($node);
+            }
+        }
+    }
+
+    public function getErrors()
+    {
+        $errors = [];
+        foreach ($this->rules as $checker) {
+            $checkerErrors = $checker->flushErrors();
+            if ($checkerErrors) {
+                $errors = array_merge($errors, $checkerErrors);
             }
         }
 
-        // Validate ... Another checker
-    }
-
-    /**
-     * @return array|bool errors or false
-     */
-    public function getErrors()
-    {
-        return empty($this->errors) ? false : $this->errors;
+        return empty($errors) ? false : $errors;
     }
 }

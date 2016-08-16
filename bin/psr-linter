@@ -5,22 +5,33 @@
 require_once __DIR__ . '/../vendor/autoload.php';
 
 use \Commando\Command;
-use function \PsrLinter\lintDirectory;
-use function \PsrLinter\report;
+use function \PsrLinter\lintCli;
 
-$cmd = new Commando\Command();
+$cmd = new Command();
 
 $cmd->option()
     ->require(true)
     ->describedAs('One or more files and/or directories to check')
     ->expectsFile();
-$cmd
-    ->setHelp('Validate php files according PSR2 standards' . PHP_EOL . PHP_EOL. 'Usage: psr-linter <file>');
+$cmd->flag('fix')
+    ->describedAs('fix violations')
+    ->boolean();
+$cmd->flag('report-file')
+    ->describedAs('Save report to file. STDERR suppressed in case of no violations');
+$cmd->flag('report-format')
+    ->must(function ($format) {
+        return in_array($format, ['text', 'json', 'yaml']);
+    })
+    ->describedAs("Report format: 'text', 'json' and 'yaml' available");
+$cmd->flag('sniffs')
+    ->describedAs('Directory with sniffs to use (php files with rules). Use default rules if flag not set')
+    ->expectsFile();
+$cmd->flag('ruleset')
+    ->expectsFile()
+    ->describedAs('Json file with list of sniffs to include during checking. Use all sniffs if flag not set');
+$cmd->setHelp("Validate php files according PSR2 standards\n\n" .
+              "Usage: psr-linter file [--sniffs path] [--ruleset file.json] " .
+              "[--fix] [--report-file file] [--report-format format]\n\n".
+              "Example: psr-linter myProject --sniffs ~/mySniffs --fix --report-file linter.log --report-format yaml");
 
-$errors = lintDirectory($cmd[0]);
-
-if ($errors) {
-    file_put_contents('php://stderr', report($errors));
-}
-
-exit(0);
+exit(lintCli($cmd[0], $cmd->getFlagValues()));
