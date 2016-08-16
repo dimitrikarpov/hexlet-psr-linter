@@ -64,7 +64,6 @@ function lintCli($path, $options = [])
     $getRuleset = function ($path) {
         if ($path) {
             return json_decode(file_get_contents($path));
-            // TODO: throw exception 'json not valid'
         } else {
             return false;
         }
